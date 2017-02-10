@@ -1,0 +1,11 @@
+{% if flash.getMessage('info') %}
+<div class="alert alert-info alert-dismissable" style="margin-top: 25px" align="center">
+	 <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+	{{ flash.getMessage('info') | first }}
+</div>
+{% elseif flash.getMessage('success') %}
+<div class="alert alert-success alert-dismissable" style="margin-top: 25px" align="center">
+	 <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+	{{ flash.getMessage('success') | first }}
+</div>
+{% endif %}

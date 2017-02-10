@@ -9,7 +9,7 @@ return [
 		'parseOptions' => [
 			'debug' => true,
 	    	'charset' => 'UTF-8',
-	    	//'base_template_class' => 'Twig_Template',
+	    	'base_template_class' => 'Twig_Template',
 	    	'strict_variables' => false,
 	    	'autoescape' => 'html',
 	    	'cache' => __DIR__.'/../storage/views/cache',

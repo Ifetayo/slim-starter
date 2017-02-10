@@ -1,5 +1,10 @@
 <?php 
+require __DIR__.'/../vendor/autoload.php';
+session_start();
+date_default_timezone_set('UTC');
 
-require __DIR__.'/../bootstrap/app.php';
+$app = new SlimStarter\SlimStarter();
+
+$app->load($app);
 
 $app->run();
