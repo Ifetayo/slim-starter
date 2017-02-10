@@ -47,13 +47,8 @@ class AuthController extends Controller
 		return $user_repo->registerUser($params);		
 	}
 
-	public function getSignIn(Response $response, View $view)
+	public function getSignIn(Response $response)
 	{
-		return $view->render($response, 'auth\signin.twig');
-	}
-
-	public function p()
-	{
-		return 'here';
+		return $this->view->render($response, 'auth\signin.twig');
 	}
 }

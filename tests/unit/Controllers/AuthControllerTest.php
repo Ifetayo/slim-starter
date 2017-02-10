@@ -87,11 +87,24 @@ class AuthControllerTest extends ControllerTest
 	{
 		$auth_controller = new AuthController($this->app->getContainer()->get(Twig::class), $this->app->getContainer()->get(FlashInterface::class));
 
-		$response = new \Slim\Http\Response;;
+		$response = new \Slim\Http\Response;
 		$response = $auth_controller->getSignUp($response);
 
 		$view = $this->app->getContainer()->get(Twig::class);
 		$expected_output = $view->fetch('auth\signup.twig');
+
+		$this->assertEquals($response->getBody()->__toString(), $expected_output);
+	}
+
+	public function can_get_sign_in_page()
+	{
+		$auth_controller = new AuthController($this->app->getContainer()->get(Twig::class), $this->app->getContainer()->get(FlashInterface::class));
+
+		$response = new \Slim\Http\Response;
+		$response = $auth_controller->getSignIn($response);
+
+		$view = $this->app->getContainer()->get(Twig::class);
+		$expected_output = $view->fetch('auth\signin.twig');
 
 		$this->assertEquals($response->getBody()->__toString(), $expected_output);
 	}
