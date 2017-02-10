@@ -15,19 +15,17 @@ class AuthControllerTest extends ControllerTest
 	/** @test */
 	public function cannot_register_a_user_with_incorrect_input()
 	{
-		//var_dump($this->app->getContainer()->get('router')->getNamedRoute('auth.signup')->getName());
-
 		$dirty_params = ['username' => 'tester', 'name' => 'test', 'password' => 'password'];
 
 		$this->createRequestAndResponse('POST', '/signup', $dirty_params);
 		$response = $this->runApp();		
-		//var_dump($r->getStatusCode());
+
 		$this->assertEquals($_SESSION['errors']['email'], "Application error. Contact admin.");
 
-		/*$dirty_params = ['email' => '', 'name' => 'test', 'password' => 'password'];
+		$dirty_params = ['email' => '', 'name' => 'test', 'password' => 'password'];
 		$this->createRequestAndResponse('POST', '/signup', $dirty_params);
 		$this->runApp();		
-		$this->assertEquals($_SESSION['errors']['email'][0], "Email must not be empty");*/		
+		$this->assertEquals($_SESSION['errors']['email'][0], "Email must not be empty");		
 	}
 
 	/** @test */
@@ -74,21 +72,28 @@ class AuthControllerTest extends ControllerTest
 	}
 
 	/** @test */
-	public function can_route_to_get_sign_up_page()
+	/*public function can_route_to_get_sign_up_page()
 	{
-		//var_dump($this->app->getContainer()->get('router')->getNamedRoute('auth.signup')->getName());
-		//die();
 		$this->createRequestAndResponse('GET', '/signup');
 		$response = $this->runApp();
 		$view = $this->app->getContainer()->get(Twig::class);
 		$expected_output = $view->fetch('auth\signup.twig');
-		//var_dump($response->getBody()->__toString());
-		//var_dump($expected_output);
+		
 		$this->assertEquals($response->getBody()->__toString(), $expected_output);
-		//var_dump('response');
-		//die();
-		//var_dump($this->app->getContainer()->get('router')->getNamedRoute('auth.signup')->getName());
+	}*/
 
+	/** @test */
+	public function can_get_sign_up_page_view()
+	{
+		$auth_controller = new AuthController($this->app->getContainer()->get(Twig::class), $this->app->getContainer()->get(FlashInterface::class));
+
+		$response = new \Slim\Http\Response;;
+		$response = $auth_controller->getSignUp($response);
+
+		$view = $this->app->getContainer()->get(Twig::class);
+		$expected_output = $view->fetch('auth\signup.twig');
+
+		$this->assertEquals($response->getBody()->__toString(), $expected_output);
 	}
 
 	
