@@ -46,5 +46,9 @@ return[
 	\SlimStarter\Flash\Contracts\FlashInterface::class => function(ContainerInterface $container){
 		return new \SlimStarter\Flash\SlimFlash();	
 	},
+	/* CSRF Middleware */
+	\Slim\Csrf\Guard::class => function(ContainerInterface $container){
+		return new \Slim\Csrf\Guard;	
+	},
 
 ];

@@ -1,5 +1,4 @@
-<?php 
-
+<?php
 namespace SlimStarter\Middleware;
 
 use \Slim\Views\Twig;

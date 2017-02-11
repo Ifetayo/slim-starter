@@ -2,6 +2,7 @@
 namespace SlimStarter;
 
 use Dotenv\Dotenv;
+use Slim\Csrf\Guard;
 use \Slim\Views\Twig;
 use Noodlehaus\Config;
 use DI\Bridge\Slim\App;
@@ -24,8 +25,6 @@ class SlimStarter extends App
 	 */	
 	public function load($app)
     {
-		
-		
     	$this->dot_env = new Dotenv(__DIR__.'/../');
 
 		$this->dot_env->load();
@@ -42,8 +41,11 @@ class SlimStarter extends App
 		require_once __DIR__.'/../app/routes/web.php';
 		require_once __DIR__.'/../app/routes/api.php';
 
+		$app->add(new \SlimStarter\Middleware\CSRFMiddleware($app_container->get(Guard::class), $app_container->get(Twig::class)));
 		$app->add(new \SlimStarter\Middleware\ValidationErrorsMiddleware($app_container->get(Twig::class)));
 		$app->add(new \SlimStarter\Middleware\OldFormDataMiddleware($app_container->get(Twig::class)));
+		
+		$app->add($app_container->get(Guard::class));
 
 		v::with('SlimStarter\\FormValidation\\Rules\\');
     }

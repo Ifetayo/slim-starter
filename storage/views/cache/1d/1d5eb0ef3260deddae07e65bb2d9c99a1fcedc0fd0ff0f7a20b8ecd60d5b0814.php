@@ -84,7 +84,10 @@ class __TwigTemplate_28eeb2b65a4762b50137fc17a704daf91636fd3e1e2cb868ba8f3938db7
         echo "\t\t\t\t</div>
 
 \t\t\t\t<button type=\"submit\" class=\"btn btn-default\">Signin</button>
-\t\t\t\t
+\t\t\t\t";
+        // line 32
+        echo $this->getAttribute((isset($context["csrf"]) ? $context["csrf"] : null), "field", array());
+        echo "
 \t\t\t\t</form>
 \t\t\t</div>
 \t\t</div>
@@ -105,7 +108,7 @@ class __TwigTemplate_28eeb2b65a4762b50137fc17a704daf91636fd3e1e2cb868ba8f3938db7
 
     public function getDebugInfo()
     {
-        return array (  84 => 29,  78 => 27,  76 => 26,  70 => 23,  66 => 21,  60 => 19,  58 => 18,  54 => 17,  49 => 15,  38 => 6,  35 => 5,  29 => 3,  11 => 1,);
+        return array (  89 => 32,  84 => 29,  78 => 27,  76 => 26,  70 => 23,  66 => 21,  60 => 19,  58 => 18,  54 => 17,  49 => 15,  38 => 6,  35 => 5,  29 => 3,  11 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -149,7 +152,7 @@ class __TwigTemplate_28eeb2b65a4762b50137fc17a704daf91636fd3e1e2cb868ba8f3938db7
 \t\t\t\t</div>
 
 \t\t\t\t<button type=\"submit\" class=\"btn btn-default\">Signin</button>
-\t\t\t\t
+\t\t\t\t{{ csrf.field | raw }}
 \t\t\t\t</form>
 \t\t\t</div>
 \t\t</div>

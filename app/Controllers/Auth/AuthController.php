@@ -1,21 +1,18 @@
 <?php 
 namespace SlimStarter\Controllers\Auth;
 
-use SlimStarter\Controllers\Controller;
 use Slim\Router;
 use Slim\Views\Twig as View;
+use SlimStarter\Controllers\Controller;
 use SlimStarter\Flash\Contracts\FlashInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use SlimStarter\FormValidation\FormValidatorInterface;
 use SlimStarter\Repositories\Contracts\UserRepositoryInterface;
 
-/**
-* 
-*/
+
 class AuthController extends Controller
 {
-	
 	public function getSignUp(Response $response)
 	{	
 		return $this->view->render($response, 'auth\signup.twig');
