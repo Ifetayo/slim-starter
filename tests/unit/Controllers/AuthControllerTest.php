@@ -71,7 +71,6 @@ class AuthControllerTest extends ControllerTest
 		$this->assertEquals($_SESSION['slimFlash']['success'][0], "Your registration has been successfully. An email has been sent to the provided email. You would need to verify your email before you can login");
 	}
 
-	/** @test */
 	/*public function can_route_to_get_sign_up_page()
 	{
 		$this->createRequestAndResponse('GET', '/signup');
@@ -96,6 +95,7 @@ class AuthControllerTest extends ControllerTest
 		$this->assertEquals($response->getBody()->__toString(), $expected_output);
 	}
 
+	/** @test */
 	public function can_get_sign_in_page()
 	{
 		$auth_controller = new AuthController($this->app->getContainer()->get(Twig::class), $this->app->getContainer()->get(FlashInterface::class));

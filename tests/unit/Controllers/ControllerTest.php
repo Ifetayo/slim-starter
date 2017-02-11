@@ -17,8 +17,6 @@ use SlimStarter\Flash\Contracts\FlashInterface;
 use SlimStarter\FormValidation\FormValidatorInterface;
 use SlimStarter\Repositories\Contracts\UserRepositoryInterface;
 
-//session_start();
-//var_dump(require __DIR__.'/../../../public/index.php');
 session_start();
 /**
  * @runTestsInSeparateProcesses
@@ -33,27 +31,13 @@ abstract class ControllerTest extends \PHPUnit_Framework_TestCase
        
         $_SESSION = array();
         date_default_timezone_set('UTC');
-        require __DIR__.'/../../../vendor/autoload.php';
-        
-        
+        require __DIR__.'/../../../vendor/autoload.php';        
 
         $this->app = new SlimStarter();
         //load dependencies
         $this->app->load($this->app);
 		//NB: At this point the $this->app->run() method has not been called		
 	}
-
-
-
-   /* public function test1()
-    {
-        var_dump($this->app->getContainer()->get('router')->getNamedRoute('auth.signup')->getName());
-    }
-
-    public function test2()
-    {
-        var_dump($this->app->getContainer()->get('router')->getNamedRoute('auth.signup')->getName());
-    }*/
 
 	/**
      *
@@ -82,9 +66,7 @@ abstract class ControllerTest extends \PHPUnit_Framework_TestCase
         //Tests can be ran with either of the commented out lines check the slim app class for more details
 
         /* 1 using the run method*/        
-
-        /*var_dump($this->app->getContainer()->set('request', $this->request));
-        die();
+        /*
         $this->app->getContainer()->set('request', $this->request);
         $this->app->getContainer()->set('response', $this->response);
         return $this->app->run(true);*/
