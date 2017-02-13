@@ -47,8 +47,11 @@ return[
 		return new \SlimStarter\Flash\SlimFlash();	
 	},
 	/* CSRF Middleware */
-	\Slim\Csrf\Guard::class => function(ContainerInterface $container){
-		return new \Slim\Csrf\Guard;	
+	\SlimStarter\Middleware\Contracts\CSRFInterface::class => function(ContainerInterface $container){
+		$guard = new \SlimStarter\Middleware\CSRFGuard;		
+		$guard->setFlashObject($container->get(\SlimStarter\Flash\Contracts\FlashInterface::class));
+		$guard->setRouterObject($container->get('router'));
+		return $guard;	
 	},
 
 ];
