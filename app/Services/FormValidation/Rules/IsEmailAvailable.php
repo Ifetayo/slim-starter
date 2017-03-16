@@ -1,5 +1,5 @@
 <?php 
-namespace SlimStarter\FormValidation\Rules;
+namespace SlimStarter\Services\FormValidation\Rules;
 
 use Respect\Validation\Rules\AbstractRule;
 use SlimStarter\Repositories\Contracts\UserRepositoryInterface;

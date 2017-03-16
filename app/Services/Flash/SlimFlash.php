@@ -1,8 +1,8 @@
 <?php 
-namespace SlimStarter\Flash;
+namespace SlimStarter\Services\Flash;
 
 use Slim\Flash\Messages;
-use SlimStarter\Flash\Contracts\FlashInterface;
+use SlimStarter\Services\Flash\Contracts\FlashInterface;
 /**
 * 
 */

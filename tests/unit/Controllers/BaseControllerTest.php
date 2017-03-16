@@ -21,7 +21,7 @@ session_start();
 /**
  * @runTestsInSeparateProcesses
  */
-abstract class ControllerTest extends \PHPUnit_Framework_TestCase
+abstract class BaseControllerTest extends \PHPUnit_Framework_TestCase
 {
     protected $response;
     protected $request;

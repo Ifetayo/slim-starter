@@ -3,9 +3,17 @@
 	 <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
 	{{ flash.getMessage('info') | first }}
 </div>
-{% elseif flash.getMessage('success') %}
+{% elseif flash.getMessage('reg-success') %}
 <div class="alert alert-success alert-dismissable" style="margin-top: 25px" align="center">
 	 <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-	{{ flash.getMessage('success') | first }}
+	{{ flash.getMessage('reg-success') | first }}
+	<form class="form-horizontal" method="POST" action="{{ path_for('auth.resend.token') }}" role="form">
+		<input type="hidden" name="token" value="{{ flash.getMessage('token') | first }}"/>
+    	<input type="hidden" name="email" value="{{ flash.getMessage('email') | first }}"/>
+    	<button class="btn btn-danger btn-wide" type="submit">
+              Resend Email
+        </button>
+        {{ csrf.field | raw }}
+	</form>
 </div>
 {% endif %}

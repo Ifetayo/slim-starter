@@ -1,0 +1,2 @@
+./vendor/bin/phpunit tests/Unit/Auth/Handlers ActivationHandlerTest.php --coverage-text=f
+./vendor/bin/phpunit --coverage-text=codecoverage

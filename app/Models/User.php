@@ -10,7 +10,8 @@ class User extends Model
 
 	protected $fillable = [
         'email',
-        'name',
+        'first_name',
+        'last_name',
         'password',
     ];
 
@@ -23,4 +24,14 @@ class User extends Model
      */
     protected $hidden = array('password');
     protected $guarded = array('password');
+
+    public function activation()
+    {
+        return $this->hasOne(Activation::class);
+    }
+
+    public function fullName()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 }

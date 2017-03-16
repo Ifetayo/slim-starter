@@ -11,8 +11,13 @@
          syntaxCheck="false"
 >
     <testsuites>
-        <testsuite name="Slim Starter Test suite">
-            <directory>tests/</directory>
+        <testsuite name="Slim Starter Unit Test suite">
+            <directory>tests/unit/Controllers/RegistrationControllerTest.php</directory>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./app</directory>
+        </whitelist>
+    </filter>
 </phpunit>

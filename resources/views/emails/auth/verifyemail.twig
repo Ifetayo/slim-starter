@@ -1,0 +1,10 @@
+<html>
+<head>
+	<title>Welcome to Slim Starter</title>
+</head>
+<body>
+Dear {{ user.first_name }}, welcome to slim starter. Please click on the link 
+{{ app_url }}{{ path_for('auth.verify', [], {'email' : user.email|url_encode, 'token' : token|url_encode}) }} inorder to verify your email address.
+Thank you.
+</body>
+</html>

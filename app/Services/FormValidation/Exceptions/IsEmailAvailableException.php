@@ -1,6 +1,6 @@
 <?php 
 
-namespace SlimStarter\FormValidation\Exceptions;
+namespace SlimStarter\Services\FormValidation\Exceptions;
 
 use Respect\Validation\Exceptions\ValidationException;
 /**

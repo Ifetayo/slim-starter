@@ -17,9 +17,6 @@ use SlimStarter\Flash\Contracts\FlashInterface;
 use SlimStarter\FormValidation\FormValidatorInterface;
 use SlimStarter\Repositories\Contracts\UserRepositoryInterface;
 
-//session_start();
-//var_dump(require __DIR__.'/../../../public/index.php');
-
 class ControllersTest extends \PHPUnit_Framework_TestCase
 {
     protected $response;

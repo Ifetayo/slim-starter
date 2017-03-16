@@ -9,7 +9,12 @@
         "php-di/slim-bridge": "^1.0",
         "slim/csrf": "^0.8.1",
         "phpunit/phpunit": "^5.7",
-        "slim/flash": "^0.2.0"
+        "slim/flash": "^0.2.0",
+        "ircmaxell/random-lib": "^1.2",
+        "mailgun/mailgun-php": "^2.1",
+        "php-http/curl-client": "^1.7",
+        "guzzlehttp/psr7": "^1.3",
+        "nesbot/carbon": "^1.22"
     },
     "autoload": {
     	"psr-4":{

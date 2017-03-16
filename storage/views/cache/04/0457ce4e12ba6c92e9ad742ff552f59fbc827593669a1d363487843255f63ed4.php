@@ -73,7 +73,7 @@ class __TwigTemplate_10baaa1bb0b75d1010f9ba0a72712f0934d6fb8e32fb703877230ad0c4d
         echo (($this->getAttribute((isset($context["errors"]) ? $context["errors"] : null), "name", array())) ? (" has-error") : (""));
         echo "\">
 \t\t\t\t\t<label for=\"name\">Name</label>
-\t\t\t\t\t<input type=\"text\" name=\"name\" id=\"name\"class=\"form-control\" value=\"";
+\t\t\t\t\t<input type=\"text\" name=\"name\" id=\"name\" class=\"form-control\" value=\"";
         // line 25
         echo twig_escape_filter($this->env, $this->getAttribute((isset($context["old"]) ? $context["old"] : null), "name", array()), "html", null, true);
         echo "\"/>
@@ -106,9 +106,11 @@ class __TwigTemplate_10baaa1bb0b75d1010f9ba0a72712f0934d6fb8e32fb703877230ad0c4d
         }
         // line 37
         echo "\t\t\t\t</div>
-
-\t\t\t\t<button type=\"submit\" class=\"btn btn-default\">Sign Up</button>
-\t\t\t\t
+\t\t\t\t";
+        // line 38
+        echo $this->getAttribute((isset($context["csrf"]) ? $context["csrf"] : null), "field", array());
+        echo "
+\t\t\t\t<button type=\"submit\" class=\"btn btn-default\">Sign Up</button>\t\t\t\t
 \t\t\t\t</form>
 \t\t\t</div>
 \t\t</div>
@@ -129,7 +131,7 @@ class __TwigTemplate_10baaa1bb0b75d1010f9ba0a72712f0934d6fb8e32fb703877230ad0c4d
 
     public function getDebugInfo()
     {
-        return array (  108 => 37,  102 => 35,  100 => 34,  94 => 31,  90 => 29,  84 => 27,  82 => 26,  78 => 25,  73 => 23,  69 => 21,  63 => 19,  61 => 18,  57 => 17,  52 => 15,  47 => 13,  38 => 6,  35 => 5,  29 => 3,  11 => 1,);
+        return array (  111 => 38,  108 => 37,  102 => 35,  100 => 34,  94 => 31,  90 => 29,  84 => 27,  82 => 26,  78 => 25,  73 => 23,  69 => 21,  63 => 19,  61 => 18,  57 => 17,  52 => 15,  47 => 13,  38 => 6,  35 => 5,  29 => 3,  11 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -159,15 +161,15 @@ class __TwigTemplate_10baaa1bb0b75d1010f9ba0a72712f0934d6fb8e32fb703877230ad0c4d
 \t\t\t\t<div class=\"form-group {{ errors.email ? ' has-error' : '' }}\">
 \t\t\t\t\t<label for=\"email\">Email</label>
 \t\t\t\t\t<input type=\"email\" name=\"email\" id=\"email\" placeholder=\"you@domain.com\" class=\"form-control\" value=\"{{ old.email }}\" />
-\t\t\t\t\t{% if errors.email%}
+\t\t\t\t\t{% if errors.email %}
 \t\t\t\t\t\t<span class=\"help-block\">{{ errors.email | first }}</span>
 \t\t\t\t\t{% endif %}
 \t\t\t\t</div>
 
 \t\t\t\t<div class=\"form-group {{ errors.name ? ' has-error' : '' }}\">
 \t\t\t\t\t<label for=\"name\">Name</label>
-\t\t\t\t\t<input type=\"text\" name=\"name\" id=\"name\"class=\"form-control\" value=\"{{ old.name }}\"/>
-\t\t\t\t\t{% if errors.name%}
+\t\t\t\t\t<input type=\"text\" name=\"name\" id=\"name\" class=\"form-control\" value=\"{{ old.name }}\"/>
+\t\t\t\t\t{% if errors.name %}
 \t\t\t\t\t\t<span class=\"help-block\">{{ errors.name | first }}</span>
 \t\t\t\t\t{% endif %}
 \t\t\t\t</div>
@@ -179,9 +181,8 @@ class __TwigTemplate_10baaa1bb0b75d1010f9ba0a72712f0934d6fb8e32fb703877230ad0c4d
 \t\t\t\t\t\t<span class=\"help-block\">{{ errors.password | first }}</span>
 \t\t\t\t\t{% endif %}
 \t\t\t\t</div>
-
-\t\t\t\t<button type=\"submit\" class=\"btn btn-default\">Sign Up</button>
-\t\t\t\t
+\t\t\t\t{{ csrf.field | raw }}
+\t\t\t\t<button type=\"submit\" class=\"btn btn-default\">Sign Up</button>\t\t\t\t
 \t\t\t\t</form>
 \t\t\t</div>
 \t\t</div>

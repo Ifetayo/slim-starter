@@ -1,7 +1,14 @@
 <?php 
 require __DIR__.'/../vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
 session_start();
 date_default_timezone_set('UTC');
+
+$dot_env = new Dotenv(__DIR__.'/../');
+
+$dot_env->load();
 
 $app = new SlimStarter\SlimStarter();
 
