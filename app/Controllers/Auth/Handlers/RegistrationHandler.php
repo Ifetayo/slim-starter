@@ -30,7 +30,7 @@ class RegistrationHandler implements RegistrationInterface
 		$this->db = $db->connection();
 	}
 
-	public function registerUser(array $params, RegistrationController $call_back, $true)
+	public function registerUser(array $params, RegistrationController $call_back)
 	{
 		$this->db->beginTransaction();
 		try {
@@ -93,8 +93,7 @@ class RegistrationHandler implements RegistrationInterface
 			$call_back->noUserFound();
 		}catch(Activation404Exception $e){
 			$call_back->noActivationFound();
-		}
-		
+		}		
 		//check for activation record
 		//check activation record is within 2 days
 		//set activation in user table

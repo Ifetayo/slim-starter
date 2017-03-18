@@ -18,11 +18,24 @@ class RegistrationController
 		$this->reg_view = $reg_view;
 	}
 
+	/**
+	 * Get the sign up page
+	 */	
 	public function getSignUp()
 	{
 		return $this->reg_view->viewSignUpPage();
 	}
 
+	/**
+	 *
+	 * Post sign up page form
+	 * if validation fails, redirect back to home page with
+	 * the list of errors in the session
+	 * else go ahead and process the data
+	 * @param Request $request containing the post request data
+	 * @param FormValidatorInterface $form_validator validator class
+	 * @param RegistrationHandler $reg_handler handles registration of the user
+	 */	
 	public function postSignUp(Request $request, FormValidatorInterface $form_validator, RegistrationHandler $reg_handler)
 	{
 		$params = $request->getParams();
@@ -31,42 +44,42 @@ class RegistrationController
 			return $this->reg_view->redirectToSignUpPage();
 		}
 		return $reg_handler->registerUser($params, $this);
-	}
+	}	
 
-	public function emailVerify(Request $request, FormValidatorInterface $form_validator, ActivationHandler $activation_handler)
-	{
-		$params = $request->getParams();
-		//validate input and check if validation has errors
-		if ($form_validator->validateEmailVerify($params)->hasErrors()) {
-			$message = array('type' => 'info', 'message' => "Something went wrong :(. We could not get your details. Still having issues, contact admin");
-			return $this->reg_view->withMessage($message)->redirectHome();
-		}
-		return $activation_handler->verifyUserEmail();
-	}
-
-	public function resendToken(Request $request, RegistrationHandler $reg_handler)
-	{
-		$params = $request->getParams();
-		return $reg_handler->resendVerificationEmail($params, $this);
-	}
-
+	/**
+	 * Redirect user to home page
+	 */	
 	public function redirectHome()
 	{
-		$this->reg_view->redirectHome();
+		return $this->reg_view->redirectHome();
 	}
 
+	/**
+	 * If the user record cannot be
+	 * created, redirect here
+	 */	
 	public function couldNotCreateUserRecord()
 	{
 		$message = array('type' => 'info', 'message' => "Something went wrong :(. We could not save your details. Why don't you try again later");
 		return $this->reg_view->withMessage($message)->redirectToSignUpPage();
 	}
 
+	/**
+	 * If the activation record
+	 * cannot be create, redirect here
+	 */	
 	public function couldNotCreateActivationRecord()
 	{
 		$message = array('type' => 'info', 'message' => "Something went wrong :(. We could not save your details. Why don't you try again later");
 		return $this->reg_view->withMessage($message)->redirectToSignUpPage();
 	}
 
+	/**
+	 *
+	 * If verification email could not be sent to the user
+	 * @param User $user the user record
+	 * @param string $token the token generated
+	 */	
 	public function couldNotSendVerificationEmail(User $user, $token)
 	{
 		$message = array('reg-success' => "Something went wrong :(. We could not send you a verfication email. Why don't you try again later",
@@ -76,6 +89,11 @@ class RegistrationController
 		return $this->reg_view->withMessage($message)->redirectToSignUpPage();
 	}
 
+	/**
+	 *
+	 * Registration process is complete
+	 *
+	 */	
 	public function registrationComplete(User $user, $token)
 	{
 		$message = array('reg-success' => "All done. We just send you a verfication email. Click the verify link to get verified",

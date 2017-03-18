@@ -40,16 +40,7 @@ class EmailVerificationController
 			return $this->reg_view->withMessage($message)->redirectToSignUpPage();
 		}
 		return $verify_handler->resendVerificationEmail($params, $this);
-	}
-
-	public function s()
-	{
-		$message = array('reg-success' => "test s",
-							'token' => "sd",
-							'email' => User::find(188)->email,
-						);
-		return $this->reg_view->withMessage($message)->redirectToSignUpPage();
-	}
+	}	
 
 	public function verificationEmailHasBeenSent(User $user, $token)
 	{
@@ -127,5 +118,19 @@ class EmailVerificationController
 	{
 		$message = array('info' => "Your email has been verified");
 		return $this->reg_view->withMessage($message)->redirectHome();
+	}
+
+	/**
+	 *
+	 * TEST DELETE
+	 *
+	 */
+	public function s()
+	{
+		$message = array('reg-success' => "test s",
+							'token' => "sd",
+							'email' => User::find(188)->email,
+						);
+		return $this->reg_view->withMessage($message)->redirectToSignUpPage();
 	}
 }
