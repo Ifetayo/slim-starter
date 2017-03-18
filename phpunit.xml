@@ -12,7 +12,7 @@
 >
     <testsuites>
         <testsuite name="Slim Starter Unit Test suite">
-            <directory>tests/unit/Controllers/RegistrationControllerTest.php</directory>
+            <directory>tests/unit/Controllers/EmailVerificationControllerTest.php</directory>
         </testsuite>
     </testsuites>
     <filter>

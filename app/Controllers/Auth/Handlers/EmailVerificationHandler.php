@@ -193,7 +193,7 @@ class EmailVerificationHandler
 		} catch (ErrorUpdatingActivationRecordException $e) {
 			return $call_back->couldNotUpdateActivationRecord();
 		}catch (ErrorSendingVerificationEmail $e) {
-			return $call_back->couldNotSendVerificationEmail($user, $this->token);
+			return $call_back->couldNotReSendVerificationEmail($user, $this->token);
 		}
 
 		return $call_back->newTokenSent($user, $this->token);

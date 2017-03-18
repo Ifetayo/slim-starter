@@ -1,2 +1,2 @@
 # slim-starter
-Slim Starter Strapper
+Slim Starter Strapper - Work in progress
