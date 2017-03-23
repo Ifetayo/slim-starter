@@ -10,4 +10,6 @@ interface ActivationRepositoryInterface
 	public function get(Activation $activation, $property);
 	public function save(Activation $activation);	
 	public function createActivationRecord($user_id, $token);
+	public function refreshActivationRecord(Activation $activation, $token);
+
 }

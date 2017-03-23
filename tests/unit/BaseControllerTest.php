@@ -1,5 +1,5 @@
 <?php 
-namespace SlimStarter\unit\Controllers;
+namespace SlimStarter\unit;
 
 use Dotenv\Dotenv;
 use Slim\Http\Uri;
@@ -31,7 +31,7 @@ abstract class BaseControllerTest extends \PHPUnit_Framework_TestCase
        
         $_SESSION = array();
         date_default_timezone_set('UTC');
-        require __DIR__.'/../../../vendor/autoload.php';        
+        require __DIR__.'/../../vendor/autoload.php';        
 
         $this->app = new SlimStarter();
         //load dependencies

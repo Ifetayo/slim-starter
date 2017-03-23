@@ -76,7 +76,6 @@ class EmailVerificationHandler
 	 *
 	 * Check if the too many emails have been sent to the
 	 * user over the last one day
-	 * Check that the resent count is less than 4
 	 */	
 	public function checkEmailThrottle(Activation $activation)
 	{
@@ -208,7 +207,7 @@ class EmailVerificationHandler
 	}
 
 	private function sendVerificationEmail(User $user, $token)
-	{return $this;
+	{
 		$result = $this->activation_handler->sendEmailActivation($user, $token);
 		return !$result ? 
 						call_user_func( function() use ($user) { throw new ErrorSendingVerificationEmail("Error sending verification email for user - $user->email", 1); })

@@ -8,4 +8,5 @@ namespace SlimStarter\Services\RandomGenerator;
  **/
 interface RandomGeneratorInterface
 {
+	public function generateString($length, $characters = '');
 } // END interface RandomLibInterface

@@ -7,7 +7,7 @@ $app->post('/signup', ['\SlimStarter\Controllers\Auth\RegistrationController', '
 
 $app->post('/resend-token', ['\SlimStarter\Controllers\Auth\EmailVerificationController', 'resendToken'])->setName('auth.resend.token');
 
-//$app->get('/s', ['\SlimStarter\Controllers\Auth\EmailVerificationController', 's']);
+$app->get('/s', ['\SlimStarter\Controllers\Auth\EmailVerificationController', 's']);
 
 $app->get('/email-verify', ['\SlimStarter\Controllers\Auth\EmailVerificationController', 'emailVerify'])->setName('auth.verify');
 

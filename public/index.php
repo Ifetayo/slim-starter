@@ -4,7 +4,7 @@ require __DIR__.'/../vendor/autoload.php';
 use Dotenv\Dotenv;
 
 session_start();
-date_default_timezone_set('UTC');
+date_default_timezone_set('Africa/Lagos');
 
 $dot_env = new Dotenv(__DIR__.'/../');
 

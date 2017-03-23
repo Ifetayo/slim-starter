@@ -18,7 +18,7 @@ class EmailVerificationController
 	function __construct(RegViewInterface $reg_view) {
 		$this->reg_view = $reg_view;
 	}
-
+	
 	/**
 	 *
 	 * Get route for verifying user's email.
@@ -187,6 +187,11 @@ class EmailVerificationController
 	 */
 	public function s()
 	{
+		//$r = \Carbon\Carbon::now();
+		//$activation->setUpdatedAt(date('Y-m-d H:i:s', time()));
+		$r = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', time()));
+		dd($r);
+
 		$message = array('reg-success' => "test s",
 							'token' => "sd",
 							'email' => User::find(188)->email,

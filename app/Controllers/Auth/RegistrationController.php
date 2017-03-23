@@ -60,7 +60,7 @@ class RegistrationController
 	 */	
 	public function couldNotCreateUserRecord()
 	{
-		$message = array('type' => 'info', 'message' => "Something went wrong :(. We could not save your details. Why don't you try again later");
+		$message = array('info' => "Something went wrong :(. We could not save your details. Why don't you try again later");
 		return $this->reg_view->withMessage($message)->redirectToSignUpPage();
 	}
 
@@ -70,7 +70,7 @@ class RegistrationController
 	 */	
 	public function couldNotCreateActivationRecord()
 	{
-		$message = array('type' => 'info', 'message' => "Something went wrong :(. We could not save your details. Why don't you try again later");
+		$message = array('info' => "Something went wrong :(. We could not save your details. Why don't you try again later");
 		return $this->reg_view->withMessage($message)->redirectToSignUpPage();
 	}
 
@@ -80,12 +80,9 @@ class RegistrationController
 	 * @param User $user the user record
 	 * @param string $token the token generated
 	 */	
-	public function couldNotSendVerificationEmail(User $user, $token)
+	public function couldNotSendVerificationEmail()
 	{
-		$message = array('reg-success' => "Something went wrong :(. We could not send you a verfication email. Why don't you try again later",
-							'token' => $token,
-							'email' => $user->email,
-						);
+		$message = array('info' => "Something went wrong :(. We could not send you a verfication email. Why don't you try registering again later");
 		return $this->reg_view->withMessage($message)->redirectToSignUpPage();
 	}
 

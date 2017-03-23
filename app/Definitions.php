@@ -45,6 +45,10 @@ return[
 		$view->getEnvironment()->addGlobal('app_url', $app_url);
 		return $view;
 	},
+	/* Database Service */
+	\SlimStarter\Services\Database\Contract\DatabaseInterface::class => function(ContainerInterface $container){
+		return new \SlimStarter\Services\Database\DBEloquent();	
+	},
 	/* User repository */
 	\SlimStarter\Repositories\Contracts\UserRepositoryInterface::class => function(ContainerInterface $container){
 		return new \SlimStarter\Repositories\UserRepository();	

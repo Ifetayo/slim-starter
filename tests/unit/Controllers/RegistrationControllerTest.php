@@ -5,6 +5,7 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use SlimStarter\Models\User;
 use SlimStarter\Views\ViewsInterface;
+use SlimStarter\unit\BaseControllerTest;
 use SlimStarter\Repositories\UserRepository;
 use SlimStarter\Services\FormValidation\FormValidator;
 use SlimStarter\Controllers\Auth\RegistrationController;
@@ -13,9 +14,6 @@ use SlimStarter\Controllers\Auth\Handlers\RegistrationHandler;
 use SlimStarter\Services\FormValidation\FormValidatorInterface;
 use SlimStarter\Repositories\Contracts\UserRepositoryInterface;
 use SlimStarter\Views\Contract\RegistrationControllerViewInterface;
-
-
-
 
 /**
 * @coversDefaultClass  SlimStarter\Controllers\Auth\RegistrationController

@@ -1,6 +1,7 @@
 <?php 
 namespace SlimStarter;
 
+use DI\Container;
 use Slim\Csrf\Guard;
 use Slim\Views\Twig;
 use Noodlehaus\Config;
@@ -15,6 +16,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class SlimStarter extends App
 {
 	protected $app;
+	protected $capsule;
 	/**
 	 *
 	 * Block comment
@@ -25,11 +27,8 @@ class SlimStarter extends App
 		$app_container = $app->getContainer();
 
 		$config = new Config(__DIR__.'/../config');
-		
-        $this->capsule = new \Illuminate\Database\Capsule\Manager;
-		$this->capsule->addConnection($config->get('database_connections.mysql'));
-		$this->capsule->setAsGlobal();
-		$this->capsule->bootEloquent();
+
+		$this->loadDatabase($config->get('database_connections.mysql'), $app_container);
 
 		require_once __DIR__.'/../app/routes/web.php';
 		require_once __DIR__.'/../app/routes/api.php';
@@ -52,5 +51,11 @@ class SlimStarter extends App
     	$definitions = require __DIR__.'/Definitions.php';
 
         $builder->addDefinitions($definitions);
+    }
+
+    private function loadDatabase(array $settings, Container $app_container)
+    {
+    	$db = $app_container->get(\SlimStarter\Services\Database\Contract\DatabaseInterface::class);
+		$db->bootDB($settings);
     }
 }
