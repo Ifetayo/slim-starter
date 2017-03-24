@@ -140,19 +140,6 @@ class ActivationHandler
 	 */	
 	public function emailThrottle(Activation $activation)
 	{
-		try {
-			$send_date = Carbon::createFromFormat('Y-m-d H:i:s', $activation->updated_at);
-			if ($activation->resent_count >= 4) {
-				if ($send_date->addMinutes(1440)->diffInMinutes(Carbon::now(), false) < 0) {
-					return false;					
-				}/*else{
-					return $this->setResentCount($activation, 0);
-				}*/
-			}
-		}catch (\Exception $e) {
-			return false;
-			//do some error reporting here
-		}
-		return true;
+		return $activation->resent_count >= 4 ? false : true;
 	}
 }

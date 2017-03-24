@@ -8,6 +8,7 @@ use SlimStarter\Models\User;
 interface UserRepositoryInterface
 {
 	public function get(User $user, $property);
+	public function getActivation($user);
 	public function save(User $user);
 	public function getAll();
 	public function isUserAvailable($email);	

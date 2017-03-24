@@ -13,9 +13,9 @@ class UserRepository implements UserRepositoryInterface
 		return $user->$property;
 	}
 
-	public function getAll()
+	public function getActivation($user)
 	{
-		return "h";
+		return $user->activation;
 	}
 
 	public function isUserAvailable($email)

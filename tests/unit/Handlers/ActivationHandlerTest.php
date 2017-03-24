@@ -224,10 +224,9 @@ class ActivationHandlerTest extends BaseControllerTest
 	 *
 	 */	
 	/** @test */
-	public function return_false_if_user_has_sent_4_or_more_emails_under_one_day()
+	public function return_false_if_user_has_sent_4_or_more_emails()
 	{
 		$activation = new Activation(['token_hash' => rand(0, 128), 'user_id' => 1, 'resent_count' => 4, 'activated' => 0]);		
-		$activation->setUpdatedAt(date('Y-m-d H:i:s', time()));
 		$response = $this->activation_handler->emailThrottle($activation);
 		$this->assertFalse($response);
 	}
@@ -237,31 +236,10 @@ class ActivationHandlerTest extends BaseControllerTest
 	 *
 	 */	
 	/** @test */
-	public function return_true_if_user_has_not_up_to_4_or_more_emails()
+	public function return_true_if_user_has_not_sent_up_to_4_emails()
 	{
 		$activation = new Activation(['token_hash' => rand(0, 128), 'user_id' => 1, 'resent_count' => 4, 'activated' => 0]);		
-		$activation->setUpdatedAt(date('Y-m-d H:i:s', time()));
 		$response = $this->activation_handler->emailThrottle($activation);
 		$this->assertFalse($response);
 	}
-	/**
-	 * @covers ::registerUser
-	 *
-	 */	
-	/** @test */
-	/*public function redirect_to_call_back_could_not_create_activation_if_activation_could_not_be_create()
-	{
-		$expected_output = "Activation not saved";
-		$params = ['email' => time().'@example.com', 'name' => 'Ifetayo', 'password' => 'password'];
-		$user = new User(['email' => time().'@example.com', 'first_name' => 'Ifetayo', 'last_name' => 'Agunbiade', 'password' => 'password']);
-
-		$this->user_repo->expects($this->once())->method('registerUser')->will($this->returnValue($user));
-
-		$call_back = $this->getMockBuilder(RegistrationController::class)->disableOriginalConstructor()->getMock();
-		$call_back->expects($this->once())->method('couldNotCreateActivationRecord')->will($this->returnValue($expected_output));
-
-		$response = $this->reg_handler->registerUser($params, $call_back);
-
-		$this->assertEquals($response, $expected_output);
-	}*/
 }

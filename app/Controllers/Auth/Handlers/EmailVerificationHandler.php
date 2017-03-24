@@ -4,25 +4,25 @@ namespace SlimStarter\Controllers\Auth\Handlers;
 use Carbon\Carbon;
 use SlimStarter\Models\User;
 use SlimStarter\Models\Activation;
-use Illuminate\Database\Capsule\Manager as DB;
-use SlimStarter\Controllers\Auth\EmailVerificationController;
 use SlimStarter\Services\CustomExceptions\User404Exception;
+use SlimStarter\Controllers\Auth\EmailVerificationController;
 use SlimStarter\Services\CustomExceptions\UserRecordNotSaved;
-use SlimStarter\Services\CustomExceptions\UpdatingUserException;
 use SlimStarter\Repositories\Contracts\UserRepositoryInterface;
+use SlimStarter\Services\CustomExceptions\UpdatingUserException;
 use SlimStarter\Services\CustomExceptions\TokenNotValidException;
 use SlimStarter\Services\CustomExceptions\TokenMismatchException;
 use SlimStarter\Controllers\Auth\Contracts\RegistrationInterface;
 use SlimStarter\Services\CustomExceptions\Activation404Exception;
 use SlimStarter\Services\CustomExceptions\TooManyEmailsException;
 use SlimStarter\Services\CustomExceptions\ActivationRecordNotSaved;
+use SlimStarter\Services\Database\Contract\DatabaseInterface as DB;
+use SlimStarter\Services\CustomExceptions\UpdatingActivationException;
 use SlimStarter\Services\CustomExceptions\UserHasBeenVerifiedException;
 use SlimStarter\Services\CustomExceptions\ErrorSendingVerificationEmail;
 use SlimStarter\Services\CustomExceptions\ErrorUpdatingActivationRecordException;
 
-
 /**
-* RegistrationHandler
+* EmailVerificationHandler
 */
 class EmailVerificationHandler
 {
@@ -36,15 +36,24 @@ class EmailVerificationHandler
 	function __construct(UserRepositoryInterface $user_repo, ActivationHandler $activation_handler, DB $db) {
 		$this->user_repo = $user_repo;
 		$this->activation_handler = $activation_handler;
-		$this->db = $db->connection();
+		$this->db = $db;
 	}
 
+	/**
+	 *
+	 * Resend the user their verification email
+	 * @param Array $params, this contains the url encoded user's email and token for the verification
+	 * @param EmailVerificationController $call_back call back object for the EmailVerificationController class
+	 */	
 	public function resendVerificationEmail(array $params, EmailVerificationController $call_back)
 	{
-		//check if the user exists
-		//if the user has an activation record
-		//if so send the token, and increment the resent count
-		//check for user
+		//get the user
+		//check if the user is verified
+		//get the user's activation record
+		//check if the token,
+		//check the email throttle
+		//send verification email
+		//increment the resent count
 		try {
 			$result = $this->getUser($params['email'])
 								->hasNotBeenVerified($this->user)
@@ -53,7 +62,7 @@ class EmailVerificationHandler
 											->checkEmailThrottle($this->activation)
 												->sendVerificationEmail($this->user, $params['token'])
 													->setActivationResentCount($this->activation, ++$this->activation->resent_count);
-		} catch (User404Exception $e) {
+		}catch (User404Exception $e) {
 			return $call_back->noUserFound();
 		}catch(UserHasBeenVerifiedException $e){
 			return $call_back->alreadyVerified();
@@ -68,14 +77,19 @@ class EmailVerificationHandler
 		}catch(UpdatingActivationException $e){
 			//log error here
 			//do nothing here
+			//well everything up to this point is ok for the user
+			//might as well do an error log here, with high level
 		}
 		return $call_back->verificationEmailHasBeenSent($this->user, $params['token']);
-	}	
+	}
 
 	/**
 	 *
 	 * Check if the too many emails have been sent to the
 	 * user over the last one day
+	 * @param Activation $activation, this is the user's activation record
+	 * @throws TooManyEmailsException
+	 * @return EmailVerificationHandler 
 	 */	
 	public function checkEmailThrottle(Activation $activation)
 	{
@@ -85,6 +99,14 @@ class EmailVerificationHandler
 						: call_user_func( function () { return $this; });
 	}
 
+	/**
+	 *
+	 * Set the resent count of the user's activation record
+	 * @param Activation $activation, this is the user's activation record
+	 * @param int $value, this is the value the resent count is going to be updated to
+	 * @throws UpdatingActivationException
+	 * @return EmailVerificationHandler 
+	 */	
 	public function setActivationResentCount(Activation $activation, $value)
 	{
 		$result = $this->activation_handler->setResentCount($activation, $value);
@@ -100,6 +122,8 @@ class EmailVerificationHandler
 	 * if a user exists get the activation record
 	 * if the activation record exists, check that the token has not expired
 	 * if it hasn't set the verified flag on the db to true
+	 * @param Array $params, user's etails, contains email and token all url encoded
+	 * @param EmailVerificationController $call_back, call back
 	 */	
 	public function verifyUserEmail(array $params, EmailVerificationController $call_back)
 	{
@@ -127,10 +151,17 @@ class EmailVerificationHandler
 		return $call_back->userVerified();
 	}
 
+	/**
+	 *
+	 * Get the user record that has this email
+	 * @param string @email, query email
+	 * @throws User404Exception
+	 * @return EmailVerificationHandler
+	 */	
 	private function getUser($email)
 	{
 		$user = $this->user_repo->findUserByEmail($email);
-		return is_null($user) ? 
+		return !$user ? 
 						call_user_func( function() use($email){ throw new User404Exception("No User record by email - $email found", 1); }) 
 						: call_user_func( function () use ($user) { 
 																		$this->user = $user; 
@@ -139,6 +170,13 @@ class EmailVerificationHandler
 										);
 	}
 
+	/**
+	 *
+	 * Check if the user has been verified
+	 * @param User $user, the user object
+	 * @throws UserHasBeenVerifiedException
+	 * @return EmailVerificationHandler
+	 */	
 	private function hasNotBeenVerified(User $user)
 	{
 		return $user->email_verified ? 
@@ -150,14 +188,28 @@ class EmailVerificationHandler
 										);
 	}
 
+	/**
+	 *
+	 * Get the activation record that belongs to the given user
+	 * @param User $user, user object
+	 * @throws Activation404Exception
+	 * @return EmailVerificationHandler
+	 */	
 	private function getActivationRecord(User $user)
 	{
-		$activation = $this->user_repo->get($user, 'activation');
+		$activation = $this->user_repo->getActivation($user);
 		return is_null($activation) ? 
 						call_user_func( function() use($user){ throw new Activation404Exception("No activation record for email - $user->email found", 1); }) 
 						: call_user_func( function () use ($activation) { $this->activation = $activation; return $this; });
 	}
 
+	/**
+	 *
+	 * Check if the token has expired
+	 * @param Activation $activation
+	 * @throws TokenNotValidException
+	 * @return EmailVerificationHandler
+	 */	
 	private function checkActivationTokenHasExpired($activation)
 	{
 		$result = $this->activation_handler->checkEmailTokenValidity($activation);
@@ -166,6 +218,13 @@ class EmailVerificationHandler
 						: call_user_func( function() use ($result) { return $this; });
 	}
 
+	/**
+	 *
+	 * Check if the token is a mismatch with what is on record
+	 * @param Activation $activation
+	 * @throws TokenMismatchException
+	 * @return EmailVerificationHandler
+	 */	
 	public function checkForTokenMismatch(Activation $activation, $token)
 	{
 		$result = $this->activation_handler->validateToken($activation, $token);
@@ -175,15 +234,31 @@ class EmailVerificationHandler
 
 	}
 
+	/**
+	 *
+	 * Set the user email verified field
+	 * @param User $user, affected user object
+	 * @param int $value, value to set the user'email verified field
+	 * @throws UpdatingUserException
+	 * @return EmailVerificationHandler
+	 */	
 	public function setUserEmailVerifiedFlag(User $user, $value)
 	{
 		$user->email_verified = $value;
 		$result = $this->user_repo->save($user);
 		return !$result ? 
-						call_user_func( function() { throw new UpdatingUserException("Could not set the email verified db column for user - $user->email", 1); }) 
+						call_user_func( function() use ($user) { throw new UpdatingUserException("Could not set the email verified db column for user - $user->email", 1); }) 
 						: call_user_func( function() use ($result) { return $this; });
 	}
 
+	/**
+	 *
+	 * When the user's token is a mismatch or the user token has expired
+	 * this method sends the user a fresh token to their email
+	 * @param User $user, affected user object
+	 * @param Activation $activation, user's activation object
+	 * @param EmailVerificationController $call_back, call back object
+	 */	
 	public function refreshToken(User $user, Activation $activation, EmailVerificationController $call_back)
 	{
 		try {
